@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
-const axios = require('axios')
-const cheerio = require('cheerio')
+import axios from 'axios'
+import moment from 'moment'
+import cheerio from 'cheerio'
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -15,15 +16,19 @@ export const helloWorld = functions.https.onRequest(
     const $ = cheerio.load(html)
 
     const data: any = []
+
     $('table tbody tr').each((i: any, el: any) => {
-      const date = $(el)
+      const dateRaw = $(el)
         .children()
         .first()
         .text()
+
+      const date = moment(dateRaw, 'DD/MM/YYYY').unix()
+
       const value = $(el)
         .find('td:nth-child(2)')
         .text()
-      data.push({ d: date, c: value })
+      data.push({ d: date, c: Number(value.replace(',', '.')) })
     })
 
     response.send({
