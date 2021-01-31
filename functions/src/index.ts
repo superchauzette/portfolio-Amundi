@@ -8,8 +8,10 @@ import cheerio from 'cheerio'
 
 export const helloWorld = functions.https.onRequest(
   async (request, response) => {
-    const url =
-      'https://www.amundi-ee.com/psAmundiEEPart/ezjscore/call/ezjscamundibuzz::sfForwardFront::paramsList=service=ProxyProductSheetFront&routeId=_fr-FR_745_5528664-2946407_object_graphiquehistovl?tabPos=3&bDate=20200201&eDate=20210131&devise=3&duration=365'
+    const symbol = request.query.symbol || '2946407'
+    const now = moment().format('YYYYMMDD')
+
+    const url = `https://www.amundi-ee.com/psAmundiEEPart/ezjscore/call/ezjscamundibuzz::sfForwardFront::paramsList=service=ProxyProductSheetFront&routeId=_fr-FR_745_5528664-${symbol}_object_graphiquehistovl?tabPos=3&eDate=${now}&devise=3&duration=3650`
     const res = await axios.get(url)
     const html = res.data
 
