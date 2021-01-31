@@ -3,9 +3,6 @@ import axios from 'axios'
 import moment from 'moment'
 import cheerio from 'cheerio'
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-
 export const helloWorld = functions.https.onRequest(
   async (request, response) => {
     const symbol = request.query.symbol || '2946407'
@@ -35,9 +32,7 @@ export const helloWorld = functions.https.onRequest(
 
     response.send({
       d: {
-        Name: 'AMUNDI ETF MSCI WR',
-        SymbolId: '1rTCW8',
-        Xperiod: '19',
+        SymbolId: symbol,
         QuoteTab: data
       }
     })
