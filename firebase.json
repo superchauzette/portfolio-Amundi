@@ -9,7 +9,11 @@
     "rewrites": [
       {
         "function": "amundi",
-        "source": "/**"
+        "source": "/amundi"
+      },
+      {
+        "function": "epsens",
+        "source": "/epsens"
       }
     ]
   }

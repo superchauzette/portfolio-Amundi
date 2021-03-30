@@ -4,10 +4,10 @@ import moment from 'moment'
 import cheerio from 'cheerio'
 
 export const amundi = functions.https.onRequest(async (request, response) => {
-  const symbol = request.query.symbol || '2946407'
+  const symbol = request.query.symbol || '5528664-2946407'
   const now = moment().format('YYYYMMDD')
 
-  const url = `https://www.amundi-ee.com/psAmundiEEPart/ezjscore/call/ezjscamundibuzz::sfForwardFront::paramsList=service=ProxyProductSheetFront&routeId=_fr-FR_745_5528664-${symbol}_object_graphiquehistovl?tabPos=3&eDate=${now}&devise=3&duration=3650`
+  const url = `https://www.amundi-ee.com/psAmundiEEPart/ezjscore/call/ezjscamundibuzz::sfForwardFront::paramsList=service=ProxyProductSheetFront&routeId=_fr-FR_745_${symbol}_object_graphiquehistovl?tabPos=3&eDate=${now}&devise=3&duration=3650`
   const res = await axios.get(url)
   const html = res.data
 
@@ -38,4 +38,42 @@ export const amundi = functions.https.onRequest(async (request, response) => {
       QuoteTab: data
     }
   })
+})
+
+
+
+
+
+
+
+
+export const epsens = functions.https.onRequest(async (request, response) => {
+  const product = request.query.product || '0tXGud2ZUGZjE_S6AZdHJ2dsIXZAiFDs'
+  const now = moment().unix()
+  const url = `https://www.epsens.com/fichefonds/datachart?product=${product}&type=vl&callback=jQuery19109582585583339243_1612903104709&_=${now}`
+  const res = await axios.get(url)
+  const html = res.data
+  
+
+  const data: any = []
+
+  const jquery = html.split('(')[1]
+  const jquery2 = jquery.replace(')','')
+  const jqueryparse = JSON.parse(jquery2) as any
+  console.log('coucou2')
+
+  jqueryparse.forEach((element:any) => {
+    const date=moment(element[0]).unix()
+    data.push({d:date,c:element[1]})
+  });
+
+  // ajout d'un cache CDN d'une journée
+  response.setHeader('Cache-Control', 'public, s-maxage=86400')
+
+  response.send({
+    d: {
+      QuoteTab: data
+    }
+  })
+  
 })
