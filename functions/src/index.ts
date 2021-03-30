@@ -84,3 +84,13 @@ export const test = functions.https.onCall(async () => {
   const toto = await binance.futuresExchangeInfo();
   return toto;
 });
+
+export const getBalances = functions.https.onCall(async () => {
+  //let ticker = await binance.prices();
+
+  binance.balance((error, balances) => {
+    if (error) return console.error(error);
+
+    return balances;
+  });
+});
