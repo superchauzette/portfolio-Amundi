@@ -4,8 +4,8 @@
     "source": "functions"
   },
   "hosting": {
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "crypto-dca"],
+    "public": "crypto-dca/build",
     "rewrites": [
       {
         "function": "amundi",
