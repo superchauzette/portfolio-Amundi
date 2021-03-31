@@ -37,6 +37,15 @@ function App() {
       <button onClick={lanceUneRequete}>go</button>
       <p style={{ color: "blue" }}> BTC: {balances?.BTC?.available}</p>
 
+      <table style={{ border: "1px solid black" }}>
+        {dataPie?.map((item) => (
+          <tr>
+            <td>{item.label}</td>
+            <td>{item.value}</td>
+          </tr>
+        ))}
+      </table>
+
       <div style={{ width: "100%", height: "400px" }}>
         <Pie
           data={dataPie}
