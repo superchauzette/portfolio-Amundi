@@ -85,8 +85,9 @@ export const test = functions.https.onCall(async () => {
   return toto;
 });
 
-export const getBalances = functions.https.onCall(async () => {
-  return getBalance();
+export const getBalances = functions.https.onCall(async (data) => {
+  const toto = await getBalance();
+  return toto;
 });
 
 function getBalance() {
