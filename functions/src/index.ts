@@ -73,13 +73,13 @@ const binance = new Binance().options({
 export const test = functions.https.onCall(async () => {
   //let ticker = await binance.prices();
 
-  // binance.balance((error, balances) => {
-  //   if (error) return console.error(error);
-  //   console.info("balances()", balances);
-  //   console.info("ETH balance: ", balances.ETH.available);
+   //binance.balance((error, balances) => {
+   //  if (error) return console.error(error);
+   //  console.info("balances()", balances);
+   //  console.info("ETH balance: ", balances.ETH.available);
 
-  //   response.json(balances);
-  // });
+   //  response.json(balances);
+   //});
 
   const toto = await binance.futuresExchangeInfo();
   return toto;
@@ -90,6 +90,8 @@ export const getBalances = functions.https.onCall(async () => {
 
   binance.balance((error, balances) => {
     if (error) return console.error(error);
+    console.info("balances()", balances);
+
 
     return balances;
   });
