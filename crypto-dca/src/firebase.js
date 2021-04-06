@@ -16,6 +16,6 @@ firebase.initializeApp(firebaseConfig);
 firebase.app().functions().useEmulator("localhost", 5000);
 
 export { firebase };
-// export const db = firebase.firestore();
+
 // export const auth = firebase.auth();
 // export const functions = firebase.app().functions();

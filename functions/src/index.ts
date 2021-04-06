@@ -70,24 +70,12 @@ const binance = new Binance().options({
   APISECRET: functions.config()?.binance?.apisecret,
 });
 
-export const test = functions.https.onCall(async () => {
-  //let ticker = await binance.prices();
-
-  //binance.balance((error, balances) => {
-  //  if (error) return console.error(error);
-  //  console.info("balances()", balances);
-  //  console.info("ETH balance: ", balances.ETH.available);
-
-  //  response.json(balances);
-  //});
-
-  const toto = await binance.futuresExchangeInfo();
-  return toto;
+export const futuresExchangeInfo = functions.https.onCall(async () => {
+  return binance.futuresExchangeInfo();
 });
 
 export const getBalances = functions.https.onCall(async (data) => {
-  const toto = await getBalance();
-  return toto;
+  return await getBalance();
 });
 
 function getBalance() {
@@ -98,3 +86,15 @@ function getBalance() {
     });
   });
 }
+
+export const prices = functions.https.onCall(async (data) => {
+  return binance.prices();
+});
+
+export const toto = functions.pubsub
+  .schedule("5 11 * * *")
+  .timeZone("America/New_York") // Users can choose timezone - default is America/Los_Angeles
+  .onRun((context) => {
+    console.log("This will be run every day at 11:05 AM Eastern!");
+    return null;
+  });

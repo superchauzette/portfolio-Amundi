@@ -1,8 +1,12 @@
 import React from "react";
-
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Dashboard, DCAControl, ApiParam } from "./components";
-
+import {
+  Navigation,
+  Footer,
+  Dashboard,
+  DCAControl,
+  ApiParam,
+} from "./components";
 
 function App() {
   return (
@@ -10,11 +14,16 @@ function App() {
       <Router>
         <Navigation />
         <Switch>
-          <Route path="/" exact component={() => <Dashboard />} />
-          <Route path="/dcaControl" exact component={() => <DCAControl />} />
-          <Route path="/apiParam" exact component={() => <ApiParam />} />
+          <Route path="/" exact>
+            <Dashboard />
+          </Route>
+          <Route path="/dcaControl">
+            <DCAControl />
+          </Route>
+          <Route path="/apiParam">
+            <ApiParam />
+          </Route>
         </Switch>
-        <Footer />
       </Router>
     </div>
   );
