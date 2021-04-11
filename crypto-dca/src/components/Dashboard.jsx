@@ -14,7 +14,12 @@ function getDataPie(balances) {
       label: key + " : " + Number(value.available).toFixed(8),
       value: Number(value.available),
     }))
-    ?.filter((item) => item.value !== 0);
+    ?.filter((item) => (item.value !== 0 && item.id !== "EUR"));
+}
+
+
+function getAvalaibleFIAT(balances) {
+  return balances?.["EUR"]?.available;
 }
 
 function getTotalAccount(prices, balances, precision) {
@@ -49,33 +54,22 @@ export function Dashboard() {
   const { data: balances } = useCallGetFn("getBalances");
   const { data: prices } = useCallGetFn("prices");
 
-  console.log({ futuresExchangeInfo });
+  
 
   const dataPie = getDataPie(balances);
   const BTCPrecision = 8;
   const totalAccount = getTotalAccount(prices, balances, BTCPrecision);
+  const availableFIAT = getAvalaibleFIAT(balances);
 
   const totalInUSD = totalAccount * Number(prices?.BTCUSDT);
 
-  const lanceUneRequete = async () => {
-    console.log("lance une requete");
-    // const result = await firebase.functions().httpsCallable("getBalances")({
-    //   text,
-    // });
-  };
+  console.log({ balances });
+
+
 
   return (
     <Flex pt={1} m={1} flexDirection="column">
-      <div>
-        <header>Crytpto DCA</header>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e?.target?.value)}
-        />
-        <button onClick={lanceUneRequete}>go</button>
-        <p style={{ color: "blue" }}> BTC: {balances?.BTC?.available}</p>
-
+      <div style={{ backgroudColor: 'orange' }}>
         <Text fontWeight="bold" color="orange">
           {totalAccount} BTC
         </Text>
@@ -83,14 +77,9 @@ export function Dashboard() {
           {totalInUSD} $
         </Text>
 
-        <table style={{ border: "1px solid black" }}>
-          {dataPie?.map((item) => (
-            <tr>
-              <td>{item.id} : </td>
-              <td>{item.value}</td>
-            </tr>
-          ))}
-        </table>
+        <Text fontWeight="bold" color="orange">
+          FIAT disponible : {availableFIAT} EUR
+        </Text>
 
         <div style={{ width: "100%", height: "400px", padding: " 0% 0% " }}>
           <Pie

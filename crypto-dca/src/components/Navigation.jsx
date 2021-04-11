@@ -1,50 +1,44 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import SettingsIcon from '@material-ui/icons/Settings'
 
-function Navigation(props) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+    color: '#f1c086',
+  },
+  iconColor: {
+    flexGrow: 1,
+    color: '#f1c086',
+  },
+}));
+
+export default function ButtonAppBar() {
+  const classes = useStyles();
+
   return (
-    <div className="navigation">
-      <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <div class="container">
-          <Link class="navbar-brand" to="/">
-            React Multi-Page Website
-          </Link>
-          <div>
-            <ul class="navbar-nav ml-auto">
-              <li
-                class={`nav-item  ${
-                  props.location.pathname === "/" ? "active" : ""
-                }`}
-              >
-                <Link class="nav-link" to="/">
-                  Dashboard
-                  <span class="sr-only">(current)</span>
-                </Link>
-              </li>
-              <li
-                class={`nav-item  ${
-                  props.location.pathname === "/dcaControl" ? "active" : ""
-                }`}
-              >
-                <Link class="nav-link" to="/dcaControl">
-                  DCA Control
-                </Link>
-              </li>
-              <li
-                class={`nav-item  ${
-                  props.location.pathname === "/apiParam" ? "active" : ""
-                }`}
-              >
-                <Link class="nav-link" to="/apiParam">
-                  API Parameters
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Crypto DCA App
+          </Typography>
+          <Button color="inherit" href='/'>Dashboard</Button>
+          <Button color="inherit" href='/dcaControl'>DCA Control</Button>
+          <Button color="inherit">Login</Button>
+          <IconButton href='/apiParam'>
+            <SettingsIcon className={classes.iconColor}/>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
-
-export default withRouter(Navigation);
