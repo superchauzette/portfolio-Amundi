@@ -1,8 +1,11 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 import axios from "axios";
 import moment from "moment";
 import cheerio from "cheerio";
 import Binance from "node-binance-api";
+
+admin.initializeApp();
 
 export const amundi = functions.https.onRequest(async (request, response) => {
   const symbol = request.query.symbol || "5528664-2946407";
@@ -70,12 +73,28 @@ const binance = new Binance().options({
   APISECRET: functions.config()?.binance?.apisecret,
 });
 
+// async function getBinance(userId) {
+//   const user = await admin
+//     .firestore()
+//     .collection(`users`)
+//     .doc(userId)
+//     .get()
+//     .then((doc) => doc.data());
+
+//   const binance = new Binance().options({
+//     APIKEY: user.apikey,
+//     APISECRET: user?.apisecret,
+//   });
+
+//   return binance;
+// }
+
 export const futuresExchangeInfo = functions.https.onCall(async () => {
   return binance.futuresExchangeInfo();
 });
 
 export const getBalances = functions.https.onCall(async (data) => {
-  return await getBalance();
+  return getBalance();
 });
 
 function getBalance() {
@@ -91,11 +110,69 @@ export const prices = functions.https.onCall(async (data) => {
   return binance.prices();
 });
 
-export const toto = functions.pubsub
-  .schedule("5 11 * * *")
-  .timeZone("America/New_York") // Users can choose timezone - default is America/Los_Angeles
-  .onRun((context) => {
-    console.log("This will be run every day at 11:05 AM Eastern!");
-    return null;
+export const futuresAllOrders = functions.https.onCall(async (data) => {
+  return binance.futuresAllOrders();
+});
+
+export const orders = functions.https
+  // .schedule("5 11 * * *")
+  // .timeZone("America/New_York")
+  .onRequest(async (request, response) => {
+    const users = await admin
+      .firestore()
+      .collection(`users`)
+      .get()
+      .then((docs) => toArray(docs));
+
+    for (const user of users) {
+      const orders = await admin
+        .firestore()
+        .collection(`users/${user.id}/orders`)
+        .get()
+        .then((docs) => toArray(docs));
+
+      for (const order of orders) {
+        console.log({ user, order });
+
+        const durationMin = order.updateAt
+          ? (Date.now() - order.updateAt.toDate().getTime()) / 1000 / 60
+          : 0;
+
+        const isNowToOrder = durationMin > Number(order.frequence.value);
+
+        console.log({
+          durationMin,
+          isNowToOrder,
+          frequence: Number(order.frequence.value),
+        });
+
+        if (isNowToOrder) {
+          const symbol = `${order.money.value}EUR`;
+          console.log(
+            "make order",
+            order.money.value,
+            symbol,
+            Number(order.montant)
+          );
+
+          await binance.marketBuy(symbol, Number(order.montant));
+
+          await admin
+            .firestore()
+            .collection(`users/${user.id}/orders`)
+            .doc(order.id)
+            .update({ updateAt: admin.firestore.FieldValue.serverTimestamp() });
+        }
+      }
+    }
+
+    response.json({ ok: true });
   });
 
+function toArray(querySnapshot) {
+  const result = [];
+  querySnapshot.forEach((d) => {
+    result.push({ ...d.data(), id: d.id });
+  });
+  return result;
+}

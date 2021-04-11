@@ -1,3 +1,21 @@
-.App {
+.body {
   background-color:#141516;
+}
+
+button {
+  border: none;
+  background-color: blueviolet;
+  color: white;
+  padding: 4px 12px;
+  margin: 0;
+  border-radius: 12px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(185, 180, 180);
 }

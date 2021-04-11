@@ -18,7 +18,7 @@ function getDataPie(balances) {
 }
 
 function getAvalaibleFIAT(balances) {
-  return balances?.["EUR"]?.available;
+  return balances?.EUR?.available;
 }
 
 function getTotalAccount(prices, balances, precision) {

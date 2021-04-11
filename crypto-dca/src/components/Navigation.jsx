@@ -3,9 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "./Auth";
+import { Flex, Box } from "reflexbox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export function Navigation() {
   const classes = useStyles();
+  const { logout } = useAuth();
 
   return (
     <div className={classes.root}>
@@ -31,16 +33,18 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Crypto DCA App
           </Typography>
-          <Button color="inherit" href="/">
-            Dashboard
-          </Button>
-          <Button color="inherit" href="/dcaControl">
-            DCA Control
-          </Button>
-          <Button color="inherit">Login</Button>
-          <IconButton href="/apiParam">
+          <Box px={2} />
+          <NavLink to="/">Dashboard</NavLink>
+          <Box px={2} />
+          <NavLink to="/orders">Orders</NavLink>
+          <Box px={2} />
+          <NavLink to="/dcaControl">DCA Control</NavLink>
+          <Box px={2} />
+          <NavLink to="/apiParam">
             <SettingsIcon className={classes.iconColor} />
-          </IconButton>
+          </NavLink>
+          <Box px={2} />
+          <button onClick={logout}>Logout</button>
         </Toolbar>
       </AppBar>
     </div>
