@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "./Auth";
-import { Flex, Box } from "reflexbox";
+import { Box } from "reflexbox";
 
 const useStyles = makeStyles((theme) => ({
   root: {

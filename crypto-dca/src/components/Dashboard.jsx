@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useCallGetFn } from "../useCallGetFn";
 import { ResponsivePie as Pie } from "@nivo/pie";
 import { Flex, Box } from "reflexbox";
@@ -51,8 +50,7 @@ function getTotalAccount(prices, balances, precision) {
 }
 
 export function Dashboard() {
-  const [text, setText] = useState();
-  const { data: futuresExchangeInfo } = useCallGetFn("futuresExchangeInfo");
+  // const { data: futuresExchangeInfo } = useCallGetFn("futuresExchangeInfo");
   const { data: balances } = useCallGetFn("getBalances");
   const { data: prices } = useCallGetFn("prices");
 

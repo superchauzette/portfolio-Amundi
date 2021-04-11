@@ -146,7 +146,7 @@ export const orders = functions.https
           frequence: Number(order.frequence.value),
         });
 
-        if (isNowToOrder) {
+        if (true) {
           const symbol = `${order.money.value}EUR`;
           console.log(
             "make order",
