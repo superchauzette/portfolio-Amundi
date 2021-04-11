@@ -14,9 +14,8 @@ function getDataPie(balances) {
       label: key + " : " + Number(value.available).toFixed(8),
       value: Number(value.available),
     }))
-    ?.filter((item) => (item.value !== 0 && item.id !== "EUR"));
+    ?.filter((item) => item.value !== 0 && item.id !== "EUR");
 }
-
 
 function getAvalaibleFIAT(balances) {
   return balances?.["EUR"]?.available;
@@ -31,16 +30,19 @@ function getTotalAccount(prices, balances, precision) {
       qty: Number(value.available),
     }))
     ?.filter((item) => item.qty !== 0)
+    ?.filter((account) => account.symbol !== "EUR")
     ?.map((account) => {
       return {
         symbol: account.symbol,
         qty: account.qty,
         priceInBTC:
-          account.symbol === "BTC"
+          account.symbol === "BTC" || account.symbol === "EUR"
             ? 1
             : Number(prices?.[`${account.symbol}BTC`]),
       };
     });
+
+  console.log({ myAccount });
 
   return (
     sum(myAccount?.map((a) => a.priceInBTC * Math.pow(10, precision) * a.qty)) /
@@ -54,8 +56,6 @@ export function Dashboard() {
   const { data: balances } = useCallGetFn("getBalances");
   const { data: prices } = useCallGetFn("prices");
 
-  
-
   const dataPie = getDataPie(balances);
   const BTCPrecision = 8;
   const totalAccount = getTotalAccount(prices, balances, BTCPrecision);
@@ -65,11 +65,9 @@ export function Dashboard() {
 
   console.log({ balances });
 
-
-
   return (
     <Flex pt={1} m={1} flexDirection="column">
-      <div style={{ backgroudColor: 'orange' }}>
+      <div style={{ backgroudColor: "orange" }}>
         <Text fontWeight="bold" color="orange">
           {totalAccount} BTC
         </Text>
