@@ -100,7 +100,10 @@ export const getBalances = functions.https.onCall(async (data) => {
 function getBalance() {
   return new Promise((resolve, reject) => {
     binance.balance((error, balances) => {
-      if (error) return reject(error);
+      if (error) {
+        console.log(error);
+        return reject(error);
+      }
       resolve(balances);
     });
   });
