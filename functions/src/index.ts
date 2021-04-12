@@ -71,6 +71,7 @@ export const epsens = functions.https.onRequest(async (request, response) => {
 const binance = new Binance().options({
   APIKEY: functions.config()?.binance?.apikey,
   APISECRET: functions.config()?.binance?.apisecret,
+  useServerTime: true,
 });
 
 // async function getBinance(userId) {
