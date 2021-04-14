@@ -57,25 +57,25 @@ export function Dashboard() {
 
   const dataPie = getDataPie(balances);
   const BTCPrecision = 8;
-  const totalAccount = getTotalAccount(prices, balances, BTCPrecision);
-  const availableFIAT = getAvalaibleFIAT(balances);
+  const totalAccount = Math.round(getTotalAccount(prices, balances, BTCPrecision)*100000000)/100000000;
+  const availableFIAT = Math.round(getAvalaibleFIAT(balances)*100)/100;
 
-  const totalInUSD = totalAccount * Number(prices?.BTCUSDT);
+  const totalInUSD = Math.round((getTotalAccount(prices, balances, BTCPrecision) * Number(prices?.BTCUSDT))*100)/100;
 
   console.log({ balances, prices });
 
   return (
     <Flex pt={1} m={1} flexDirection="column">
-      <div style={{ backgroudColor: "orange" }}>
-        <Text fontWeight="bold" color="orange">
-          {totalAccount} BTC
+      <div>
+        <Text fontWeight="bold" color="white">
+          Total in BTC : {totalAccount} BTC
         </Text>
-        <Text fontWeight="bold" color="orange">
-          {totalInUSD} $
+        <Text fontWeight="bold" color="white">
+          Total in USD : {totalInUSD} $
         </Text>
 
-        <Text fontWeight="bold" color="orange">
-          FIAT disponible : {availableFIAT} EUR
+        <Text fontWeight="bold" color="white">
+          Avalaible FIAT : {availableFIAT} EUR
         </Text>
 
         <div style={{ width: "100%", height: "400px", padding: " 0% 0% " }}>
