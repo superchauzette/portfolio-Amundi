@@ -51,8 +51,9 @@ function getTotalAccount(prices, balances, precision) {
 
 export function Dashboard() {
   // const { data: futuresExchangeInfo } = useCallGetFn("futuresExchangeInfo");
-  const { data: balances } = useCallGetFn("getBalances");
+  const { data: balances, error } = useCallGetFn("getBalances");
   const { data: prices } = useCallGetFn("prices");
+  console.log(error);
 
   const dataPie = getDataPie(balances);
   const BTCPrecision = 8;
@@ -61,7 +62,7 @@ export function Dashboard() {
 
   const totalInUSD = totalAccount * Number(prices?.BTCUSDT);
 
-  console.log({ balances });
+  console.log({ balances, prices });
 
   return (
     <Flex pt={1} m={1} flexDirection="column">
@@ -113,7 +114,7 @@ export function Dashboard() {
                   {
                     on: "hover",
                     style: {
-                      itemTextColor: "#000",
+                      itemTextColor: "#FF9416",
                     },
                   },
                 ],

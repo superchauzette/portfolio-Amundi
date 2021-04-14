@@ -1,10 +1,10 @@
-.body {
-  background-color:#141516;
+body {
+  background-color:#1E1E1E;
 }
 
 button {
   border: none;
-  background-color: blueviolet;
+  background-color: #FF9416;
   color: white;
   padding: 4px 12px;
   margin: 0;
@@ -18,4 +18,25 @@ a {
 
 a:hover {
   color: rgb(185, 180, 180);
+}
+
+h2 {
+  color: #FF9416;
+  text-align: center;
+  padding: 20px;
+}
+
+h5 {
+  color: white;
+  text-align: center;
+}
+
+h6 {
+  color: white;
+  text-align: center;
+}
+
+.logoBinance {
+  width: 150px;
+  margin: 20px;
 }
