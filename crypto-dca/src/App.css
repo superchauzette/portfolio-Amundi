@@ -11,6 +11,10 @@ button {
   border-radius: 12px;
 }
 
+.iconColor {
+  color: #FF9416;
+}
+
 a {
   color: white;
   text-decoration: none;

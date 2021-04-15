@@ -68,16 +68,48 @@ export function Dashboard() {
     <Flex pt={1} m={1} flexDirection="column">
       <div>
         <Text fontWeight="bold" color="white">
-          Total in BTC : {totalAccount} BTC
+          Account Balance: {totalAccount} BTC
         </Text>
         <Text fontWeight="bold" color="white">
-          Total in USD : {totalInUSD} $
+          Estimated Value : {totalInUSD} $
         </Text>
 
         <Text fontWeight="bold" color="white">
           Avalaible FIAT : {availableFIAT} EUR
         </Text>
 
+        <img src="example_solde.jpg" ></img>
+        
+        <div >
+  <div >
+    <div >
+      <span  >
+      Account Balance: 
+      </span>
+    </div>
+    <div >
+      <div >
+        <div >
+        {totalAccount}
+        </div>
+        <div ></div>
+        <div>
+          BTC
+        </div>
+      </div>
+    </div>
+  </div>
+  <div >
+    <span >
+    Estimated Value : 
+    </span>
+    <div >
+      <div>
+        ${totalInUSD} 
+      </div>
+    </div>
+  </div>
+</div>
         <div style={{ width: "100%", height: "400px", padding: " 0% 0% " }}>
           <Pie
             data={dataPie}

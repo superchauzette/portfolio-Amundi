@@ -8,6 +8,9 @@ import { toArray } from "./toArray";
 import useSWR from "swr";
 import { orderBy } from "lodash";
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+
 const Text = Box;
 
 export function DCAControl() {
@@ -73,6 +76,7 @@ export function DCAControl() {
               options={symbols}
               value={money}
               onChange={(e) => setMoney(e)}
+              placeholder="Select the cryptocurrency..."
             />
           </Box>
           <Box width="30%">
@@ -80,7 +84,7 @@ export function DCAControl() {
               name="montant"
               type="number"
               style={{ width: "100%", padding: "8px" }}
-              placeholder="montant en €"
+              placeholder="Value in €"
               value={montant}
               onChange={(e) => setMontant(e.target.value)}
             />
@@ -88,7 +92,7 @@ export function DCAControl() {
           <Box width="30%">
             <Select
               name="frequence"
-              label="Frequence"
+              label="Frequency"
               options={[
                 { label: "every 2 min", value: 2 },
                 { label: "every hour", value: 60 },
@@ -98,10 +102,11 @@ export function DCAControl() {
               ]}
               value={frequence}
               onChange={(e) => setFrequence(e)}
+              placeholder="Select the order frequency..."
             />
           </Box>
           <Box>
-            <button type="submit">Ajouter</button>
+            <button type="submit"><AddIcon /></button>
           </Box>
         </Flex>
       </form>
@@ -109,17 +114,29 @@ export function DCAControl() {
       <Flex flexDirection="column" px={2}>
         {orderBy(orders, "updateAt", "desc")?.map((order) => (
           <Flex>
-            <Box width="30%">{order?.money?.value}</Box>
-            <Box width="30%">{order?.montant} €</Box>
-            <Box width="30%">{order?.frequence?.label}</Box>
-            <Box width="30%">
+            <Box width="30%" color="white">Cryptocurrency</Box>
+            <Box width="30%" color="white">Amount</Box>
+            <Box width="30%" color="white">Frequency</Box>
+            <Box width="30%" color="white">Creation</Box>
+            <Box width="30%" color="white">Next Execution</Box>
+          </Flex>
+        ))}
+      </Flex>
+      <Flex flexDirection="column" px={2}>
+        {orderBy(orders, "updateAt", "desc")?.map((order) => (
+          <Flex>
+            <Box width="30%" color="white">{order?.money?.value}</Box>
+            <Box width="30%" color="white">{order?.montant} €</Box>
+            <Box width="30%" color="white">{order?.frequence?.label}</Box>
+            <Box width="30%" color="white">
               {order?.updateAt.toDate().toLocaleString("fr-FR")}
             </Box>
-            <Box width="30%">
-              <Text>exécuté le {executeAt(order)}</Text>
+            <Box width="30%" color="white">
+              <Text>{executeAt(order)}</Text>
             </Box>
-            <Box width="30%">
-              <button onClick={() => removeOrder(order.id)}>Delete</button>
+            <Box width="30%" color="white">
+              <button onClick={() => removeOrder(order.id)}><DeleteIcon /></button>
+              
             </Box>
           </Flex>
         ))}

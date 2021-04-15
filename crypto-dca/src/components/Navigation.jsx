@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -14,13 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    color: "#f1c086",
+    color: "#FF9416",
   },
   iconColor: {
     flexGrow: 1,
-    color: "#f1c086",
+    color: "#FF9416",
   },
 }));
+
+
 
 export function Navigation() {
   const classes = useStyles();
@@ -28,10 +30,10 @@ export function Navigation() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Crypto DCA App
+            Crypto DCA
           </Typography>
           <Box px={2} />
           <NavLink to="/">Dashboard</NavLink>

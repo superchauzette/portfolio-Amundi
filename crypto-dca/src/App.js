@@ -9,8 +9,26 @@ import "./App.css";
 import { Flex, Box } from "reflexbox";
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
+import { makeStyles, ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#000"
+    }
+  },
+})
+
+
 function App() {
   return (
+    <ThemeProvider>
       <AuthProvider>
         <Init>
           <div className="App">
@@ -34,6 +52,7 @@ function App() {
           </div>
         </Init>
       </AuthProvider>
+      </ThemeProvider>
   );
 }
 
